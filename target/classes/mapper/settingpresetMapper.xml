@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.settingpresetMapper">
+	 
+	<select id = "FindSettingPresetID" resultType = "int">
+	    select SETTING_PRESET_ID from SETTING_PRESET where SETTING_PRESET_NAME = #{SETTING_PRESET_NAME}
+	</select>
+    <select id = "AdminChk" resultType = "int" >
+        select ORIGIN_ACCOUNT_DIVISION_ID from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID} 
+    </select>
+  
+    <select id = "PresetProcessList" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select * from SETTING_PRESET_PROCESS 
+        	Inner Join ORIGIN_PROCESS ON SETTING_PRESET_PROCESS.ORIGIN_PROCESS_ID = ORIGIN_PROCESS.ORIGIN_PROCESS_ID 
+        	Inner Join SETTING_PRESET ON SETTING_PRESET_PROCESS.SETTING_PRESET_ID = SETTING_PRESET.SETTING_PRESET_ID 
+        	where SETTING_PRESET_PROCESS.SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select> 
+    <select id = "OneFindFileDirectory" resultType = "String">
+        select SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID} and  SETTING_PRESET_FILE_MANAGEMENT_ID = #{SETTING_PRESET_FILE_MANAGEMENT_ID}
+    </select>
+        
+    <select id = "FindFileDirectory" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    	
+    <select id = "IdEmpStatusChk" resultType = "int" >
+        select ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </select>
+    
+    <select id = "MultiPresetSelect" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select * from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    <select id = "CopySettingPresetNameLoad" resultType = "String">
+        select SETTING_PRESET_NAME from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    
+    <select id = "CopySettingProcess" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select ORIGIN_PROCESS_ID from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    <select id = "CopySettingProcessIndex" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select SETTING_PRESET_PROCESS_INDEX from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    <select id = "CopySettingProcessId" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select SETTING_PRESET_PROCESS_ID from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    
+    <select id = "FindProcessName" resultType = "String">
+        select ORIGIN_PROCESS_NAME from ORIGIN_PROCESS where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+    </select>
+    
+    <select id = "OriginProcessSelect" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select * from ORIGIN_PROCESS
+    </select>
+    
+     <delete id = "DeleteProcessIndex"> 
+        delete from SETTING_PRESET_PROCESS where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </delete>
+    
+    <delete id = "DeletePresetProcessUniquess">
+        delete from SETTING_PRESET_PROCESS_UNIQUESS where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </delete>
+    
+    <delete id = "DeletePresetProcessWorktime">
+        delete from SETTING_PRESET_PROCESS_WORKTIME where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </delete>
+    
+    <delete id = "DeletePresetFile2">
+        delete from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </delete>
+    
+    <delete id = "DeletePresetProcess">
+        delete from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </delete>
+   
+    <delete id = "DeleteMultiUniquess">
+        delete from SETTING_PRESET_PROCESS_UNIQUESS where SETTING_PRESET_PROCESS_UNIQUESS_ID = #{SETTING_PRESET_PROCESS_UNIQUESS_ID}
+    </delete>
+    
+    <delete id = "DeleteAllUniquess">
+        delete from SETTING_PRESET_PROCESS_UNIQUESS where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </delete>
+    
+    
+    
+    <update id = "UpdatePresetProcessTimeandInspection">
+        update SETTING_PRESET_PROCESS set
+        	ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID},
+        	SETTING_PRESET_PROCESS_WORKTIME = #{SETTING_PRESET_PROCESS_WORKTIME},
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY = #{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY},
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_CHECK = #{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_CHECK}
+        where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </update>
+    
+    <update id = "UpdatePresetFileRegister">
+        update SETTING_PRESET set 
+        	CT_FILE_REGISTER_ID = #{CT_FILE_REGISTER_ID}
+        where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </update>
+    
+    <update id = "UpdatePresetProcessSelfinspection">
+        update SETTING_PRESET_PROCESS set
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY = #{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY}
+        	where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </update>
+    
+    <insert id = "CopySettingPresetProcess">
+        insert into SETTING_PRESET_PROCESS(
+        	ORIGIN_PROCESS_ID,
+        	SETTING_PRESET_ID,
+        	SETTING_PRESET_PROCESS_INDEX)
+        values(
+        	#{ORIGIN_PROCESS_ID},
+        	#{SETTING_PRESET_ID},
+        	#{SETTING_PRESET_PROCESS_INDEX}
+        	)
+       	<selectKey keyProperty = "SETTING_PRESET_PROCESS_ID" resultType = "int">	
+        SELECT @@IDENTITY as SETTING_PRESET_PROCESS_ID
+        </selectKey>
+    </insert>
+
+    <insert id = "CopySettingPreset"> 
+        insert into SETTING_PRESET(
+        	SETTING_PRESET_NAME, 
+	     	USE_DIVISION_ID, 
+	     	ORIGIN_ACCOUNT_ID,
+	     	CT_FILE_REGISTER_ID,
+	     	ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID,
+	     	ORIGIN_ACCOUNT_DIVISION_ID)
+	     values(
+	     	#{SETTING_PRESET_NAME},
+	     	(select USE_DIVISION_ID from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}),
+	     	#{ORIGIN_ACCOUNT_ID},
+	     	(select CT_FILE_REGISTER_ID from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}),
+	     	(select ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}),
+	     	(select ORIGIN_ACCOUNT_DIVISION_ID from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID})
+	     	)
+	    <selectKey keyProperty = "CopyPresetId" resultType = "int">	
+        SELECT @@IDENTITY as SETTING_PRESET_ID
+        </selectKey>
+    </insert>
+    <select id = "DetailPresetUseView" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO" >
+        select * from USE_DIVISION
+    </select>
+    
+    <select id = "DetailPresetView" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select 
+        	SETTING_PRESET.SETTING_PRESET_NAME,
+        	SETTING_PRESET.USE_DIVISION_ID,
+        	USE_DIVISION.USE_DIVISION_NAME,
+        	ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+        	SETTING_PRESET.SETTING_PRESET_CREATEDATE
+        from SETTING_PRESET INNER JOIN USE_DIVISION ON SETTING_PRESET.USE_DIVISION_ID = USE_DIVISION.USE_DIVISION_ID 
+        					INNER JOIN ORIGIN_ACCOUNT ON SETTING_PRESET.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+        where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    
+    <select id = "DetailPresetWorktimeView" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select * from SETTING_PRESET_PROCESS_WORKTIME where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </select>
+    
+    <select id = "DetailPresetUniquessView1" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+    	select * from ORIGIN_UNIQUESS where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+    </select>
+    
+    <select id = "DetailPresetUniquessView2" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+		select * from 
+		SETTING_PRESET_PROCESS_UNIQUESS 
+		inner join ORIGIN_UNIQUESS on ORIGIN_UNIQUESS.ORIGIN_UNIQUESS_ID = SETTING_PRESET_PROCESS_UNIQUESS.ORIGIN_UNIQUESS_ID
+		where SETTING_PRESET_PROCESS_ID = #{SETTING_PRESET_PROCESS_ID}
+    </select>
+    
+    <select id = "PresetListViewTest" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+		select distinct
+			SETTING_PRESET.SETTING_PRESET_ID,
+			SETTING_PRESET.SETTING_PRESET_NAME,
+			SETTING_PRESET.USE_DIVISION_ID,
+			USE_DIVISION.USE_DIVISION_NAME,
+			ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+			ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+			stuff((select ',' + cast(SETTING_PRESET_PROCESS_ID as varchar) from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = SETTING_PRESET.SETTING_PRESET_ID for xml path('')), 1,1,'') as SETTING_PRESET_PROCESS_ID_ARRAY,
+			stuff((select ',' + cast(SETTING_PRESET_PROCESS_INDEX as varchar) from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = SETTING_PRESET.SETTING_PRESET_ID for xml path('')), 1,1,'') as SETTING_PRESET_PROCESS_INDEX_ARRAY,
+			stuff((select ',' + cast(ORIGIN_PROCESS_ID as varchar) from SETTING_PRESET_PROCESS where SETTING_PRESET_ID = SETTING_PRESET.SETTING_PRESET_ID for xml path('')), 1,1,'') as ORIGIN_PROCESS_ID_ARRAY
+		from SETTING_PRESET INNER JOIN USE_DIVISION ON SETTING_PRESET.USE_DIVISION_ID = USE_DIVISION.USE_DIVISION_ID 
+							INNER JOIN ORIGIN_ACCOUNT ON SETTING_PRESET.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+							INNER JOIN SETTING_PRESET_PROCESS ON SETTING_PRESET.SETTING_PRESET_ID = SETTING_PRESET_PROCESS.SETTING_PRESET_ID
+							INNER JOIN ORIGIN_PROCESS ON SETTING_PRESET_PROCESS.ORIGIN_PROCESS_ID = ORIGIN_PROCESS.ORIGIN_PROCESS_ID
+    </select>
+    
+    <select id = "PresetListView" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select 
+			SETTING_PRESET.SETTING_PRESET_ID,
+			SETTING_PRESET.SETTING_PRESET_NAME,
+			SETTING_PRESET.USE_DIVISION_ID,
+			USE_DIVISION.USE_DIVISION_NAME,
+			ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+			SETTING_PRESET_PROCESS.SETTING_PRESET_PROCESS_ID,
+			SETTING_PRESET_PROCESS.SETTING_PRESET_PROCESS_INDEX, 
+			ORIGIN_PROCESS.ORIGIN_PROCESS_NAME,
+			ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+			SETTING_PRESET.SETTING_PRESET_CREATEDATE
+		from SETTING_PRESET INNER JOIN USE_DIVISION ON SETTING_PRESET.USE_DIVISION_ID = USE_DIVISION.USE_DIVISION_ID 
+							INNER JOIN ORIGIN_ACCOUNT ON SETTING_PRESET.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+							INNER JOIN SETTING_PRESET_PROCESS ON SETTING_PRESET.SETTING_PRESET_ID = SETTING_PRESET_PROCESS.SETTING_PRESET_ID
+							INNER JOIN ORIGIN_PROCESS ON SETTING_PRESET_PROCESS.ORIGIN_PROCESS_ID = ORIGIN_PROCESS.ORIGIN_PROCESS_ID
+		order by SETTING_PRESET_CREATEDATE desc
+    </select> 
+    
+    
+    
+	 <insert id = "RegisterSettingPreset">
+
+	     insert into SETTING_PRESET(
+	     	ORIGIN_ACCOUNT_DIVISION_ID, 
+	     	ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID, 
+	     	CT_FILE_REGISTER_ID,
+	     	USE_DIVISION_ID,
+	     	ORIGIN_ACCOUNT_ID,
+	     	SETTING_PRESET_NAME)
+	     values(
+	     	#{ORIGIN_ACCOUNT_DIVISION_ID},
+	     	#{ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID},	
+	     	#{CT_FILE_REGISTER_ID},
+	     	#{USE_DIVISION_ID},
+	     	#{ORIGIN_ACCOUNT_ID},
+	     	#{SETTING_PRESET_NAME}
+	     	)
+	     <selectKey keyProperty = "SETTING_PRESET_ID" resultType = "int">
+	         Select @@IDENTITY as SETTING_PRESET_ID
+	     </selectKey>
+	 </insert>
+	 
+	 <insert id = "RegisterSettingPresetProcess">
+	     insert into SETTING_PRESET_PROCESS(
+        	ORIGIN_PROCESS_ID,
+        	SETTING_PRESET_ID,
+        	SETTING_PRESET_PROCESS_INDEX,
+        	SETTING_PRESET_PROCESS_WORKTIME,
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_REGISTER,
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY,
+        	SETTING_PRESET_PROCESS_OUTSOURCING_REGISTER,
+        	SETTING_PRESET_PROCESS_CUSTOMER_NAME,
+        	SETTING_PRESET_PROCESS_CUSTOMER_NUMBER,
+        	SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_CHECK
+        	)
+        values(
+        	#{ORIGIN_PROCESS_ID},
+        	#{SETTING_PRESET_ID},
+        	#{SETTING_PRESET_PROCESS_INDEX},
+        	#{SETTING_PRESET_PROCESS_WORKTIME},
+        	#{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_REGISTER},
+        	#{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY},
+        	#{SETTING_PRESET_PROCESS_OUTSOURCING_REGISTER},
+        	#{SETTING_PRESET_PROCESS_CUSTOMER_NAME},
+        	#{SETTING_PRESET_PROCESS_CUSTOMER_NUMBER},
+        	#{SETTING_PRESET_PROCESS_SELF_INSPECTION_REPORT_CHECK}
+        	)
+        <selectKey keyProperty = "SETTING_PRESET_PROCESS_ID" resultType = "int">	
+        	SELECT @@IDENTITY as SETTING_PRESET_PROCESS_ID
+        </selectKey>
+	 </insert>
+	 
+	 <insert id = "RegisterSettingPresetUniquess">
+	     insert into SETTING_PRESET_PROCESS_UNIQUESS(
+	     	SETTING_PRESET_PROCESS_ID,
+	     	ORIGIN_UNIQUESS_ID)
+	     values(
+	     	#{SETTING_PRESET_PROCESS_ID},
+	     	#{ORIGIN_UNIQUESS_ID}) 	
+	 </insert>
+	  
+	 <insert id = "RegisterSettingPresetWorktime">
+	     insert into SETTING_PRESET_PROCESS_WORKTIME(
+	     	SETTING_PRESET_PROCESS_ID,
+	     	SETTING_PRESET_PROCESS_WORKTIME_MIN)
+	     values(
+	     	#{SETTING_PRESET_PROCESS_ID},
+	     	#{SETTING_PRESET_PROCESS_WORKTIME_MIN})  
+	 </insert>
+	 
+	 <select id = "PresetNameChk" resultType = "int" >
+	     select count(*) from SETTING_PRESET where SETTING_PRESET_NAME = #{SETTING_PRESET_NAME}
+	 </select>
+	 
+	 <select id  = "SamePresetNameIDChk" resultType = "String">
+	     select SETTING_PRESET_NAME from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+	 </select>
+	 
+	 <!-- 공정 프리셋 복사의 경우 select문 2개를 이용해 조건문과 반복문 사용하여 복사했을 경우 _복사, 숫자_1 비교 복사, 반복문 실행 -->
+	 <select id = "ComparePreset" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+	     select SETTING_PRESET_NAME from SETTING_PRESET where SETTING_PRESET_NAME = #{SETTING_PRESET_NAME}
+	 </select>
+	 <select id = "SearchSettingPreset" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+	     select 
+			SETTING_PRESET.SETTING_PRESET_ID,
+			SETTING_PRESET.SETTING_PRESET_NAME,
+			SETTING_PRESET.USE_DIVISION_ID,
+			USE_DIVISION.USE_DIVISION_NAME,
+			ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME, 
+			SETTING_PRESET_PROCESS.SETTING_PRESET_PROCESS_INDEX, 
+			ORIGIN_PROCESS.ORIGIN_PROCESS_NAME
+		from SETTING_PRESET INNER JOIN USE_DIVISION ON SETTING_PRESET.USE_DIVISION_ID = USE_DIVISION.USE_DIVISION_ID 
+							INNER JOIN ORIGIN_ACCOUNT ON SETTING_PRESET.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+							INNER JOIN SETTING_PRESET_PROCESS ON SETTING_PRESET.SETTING_PRESET_ID = SETTING_PRESET_PROCESS.SETTING_PRESET_ID
+							INNER JOIN ORIGIN_PROCESS ON SETTING_PRESET_PROCESS.ORIGIN_PROCESS_ID = ORIGIN_PROCESS.ORIGIN_PROCESS_ID 
+							where SETTING_PRESET_NAME Like '%'+#{SETTING_PRESET_NAME}+'%'
+	 </select>
+	 <delete id = "DeleteSettingPreset">
+	     delete from SETTING_PRESET where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+	 </delete>
+	 <update id = "UpdateSettingPreset">
+	     update SETTING_PRESET SET 
+	     	SETTING_PRESET_NAME = #{SETTING_PRESET_NAME},
+	     	USE_DIVISION_ID = #{USE_DIVISION_ID},
+	     	SETTING_PRESET_CREATEDATE = #{SETTING_PRESET_CREATEDATE}
+	     where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+	 </update>
+	 
+	 <insert id = "PresetFileUpload">
+        Insert into SETTING_PRESET_FILE_MANAGEMENT(
+        	SETTING_PRESET_ID,
+        	JOBORDER_FILE_TYPE_ID,
+        	SETTING_PRESET_FILE_MANAGEMENT_NAME,
+        	SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY,
+        	SETTING_PRESET_FILE_MANAGEMENT_DB_DIRECTORY)
+        values(
+        	#{SETTING_PRESET_ID},
+        	#{JOBORDER_FILE_TYPE_ID},
+        	#{SETTING_PRESET_FILE_MANAGEMENT_NAME},
+        	#{SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY},
+        	#{SETTING_PRESET_FILE_MANAGEMENT_DB_DIRECTORY})
+    </insert>
+    <select id = "SelectPresetFileName" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select 
+        	SETTING_PRESET_CT_FILE_ID, 
+        	SETTING_PRESET_CT_FILE_REGISTER_ID, 
+        	SETTING_PRESET_CT_FILE_DIVISION_ID, 
+        	SETTING_PRESET_FILE_MANAGEMENT_NAME, 
+        	SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY
+        from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    <select id = "SelectPresetFile" resultType = "com.lsh.testing05.settingpreset.vo.SettingpresetVO">
+        select 	
+       		SETTING_PRESET_FILE_MANAGEMENT_ID,
+			SETTING_PRESET.SETTING_PRESET_ID,
+			JOBORDER_FILE_TYPE_ID,
+			SETTING_PRESET_FILE_MANAGEMENT_NAME,
+			SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY,
+			CT_FILE_REGISTER_ID 
+		from SETTING_PRESET_FILE_MANAGEMENT inner join SETTING_PRESET ON SETTING_PRESET.SETTING_PRESET_ID = SETTING_PRESET_FILE_MANAGEMENT.SETTING_PRESET_ID  
+        where SETTING_PRESET_FILE_MANAGEMENT.SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    
+    <delete id = "AllDeletePresetFile">
+        delete from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </delete>
+    
+    <delete id = "DeletePresetFile">
+        delete from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID} and SETTING_PRESET_FILE_MANAGEMENT_ID = #{SETTING_PRESET_FILE_MANAGEMENT_ID}
+    </delete>
+	 
+</mapper>

@@ -1,0 +1,272 @@
+package com.lsh.testing05.bom.vo;
+
+import java.util.Date;
+
+public class BomVO {
+
+	public String JOBORDER_DETAIL_JOBNUMBER;
+	
+	public String SEARCH_WORD;
+	
+	//null 체크
+	public int BOM_NULL_COUNT;
+	
+	//BOM LIST DB 컬럼
+	public int BOM_LIST_ID;
+	
+	public int[] BOM_LIST_ID2;
+	
+	public int ORIGIN_ACCOUNT_ID;
+	public String BOM_LIST_DIVISION;
+	public String BOM_LIST_MAIN_NAME;
+	public String BOM_LIST_MAIN_PRODUCTCODE;
+	public Date BOM_LIST_CREATEDATE;
+	public int BOM_LIST_QUANTITY;
+	
+	public String ORIGIN_ACCOUNT_MEMBERNAME;
+	
+	//BOM DETAIL DB 공통 컬럼
+	public int BOM_DETAIL_ID;
+	public String BOM_DETAIL_DIVISION;
+	public int BOM_DETAIL_INDEX;
+	public int BOM_DETAIL_LEVERL;
+	public String BOM_DETAIL_PRODUCTCODE;
+	public String BOM_DETAIL_PRODUCTNAME;
+	public int BOM_DETAIL_QUANTITY;
+	public Date BOM_DETAIL_CREATEDATE;
+	
+	//BOM DETAIL DB 확장 컬럼
+	public String BOM_DETAIL_BELLOWSCODE;
+	public String BOM_DETAIL_MOLDTYPE;
+	public String BOM_DETAIL_MOLDNUMBER;
+	public double BOM_DETAIL_OD;
+	public double BOM_DETAIL_C_ID;
+	public String BOM_DETAIL_MATERIALCODE;
+	public String BOM_DETAIL_MATERIAL;
+	public int BOM_DETAIL_MATERIALSIZE;
+	public double BOM_DETAIL_MATERIALTHICK;
+	public double BOM_DETAIL_WD;
+	
+	//BOM FILE DB 컬럼
+	public int BOM_FILE_MANAGEMENT_ID;
+	public String BOM_FILE_MANAGEMENT_NAME;
+	public String BOM_FILE_MANAGEMENT_DIRECTORY;
+	
+	//BOM 날짜 정하는 변수
+	public String firstday;
+	public String secondday;
+	
+	
+	public String getJOBORDER_DETAIL_JOBNUMBER() {
+		return JOBORDER_DETAIL_JOBNUMBER;
+	}
+	public void setJOBORDER_DETAIL_JOBNUMBER(String jOBORDER_DETAIL_JOBNUMBER) {
+		JOBORDER_DETAIL_JOBNUMBER = jOBORDER_DETAIL_JOBNUMBER;
+	}
+	public String getSEARCH_WORD() {
+		return SEARCH_WORD;
+	}
+	public void setSEARCH_WORD(String sEARCH_WORD) {
+		SEARCH_WORD = sEARCH_WORD;
+	}
+	public int getBOM_NULL_COUNT() {
+		return BOM_NULL_COUNT;
+	}
+	public void setBOM_NULL_COUNT(int bOM_NULL_COUNT) {
+		BOM_NULL_COUNT = bOM_NULL_COUNT;
+	}
+	public int[] getBOM_LIST_ID2() {
+		return BOM_LIST_ID2;
+	}
+	public void setBOM_LIST_ID2(int[] bOM_LIST_ID2) {
+		BOM_LIST_ID2 = bOM_LIST_ID2;
+	}
+	public int getBOM_LIST_QUANTITY() {
+		return BOM_LIST_QUANTITY;
+	}
+	public void setBOM_LIST_QUANTITY(int bOM_LIST_QUANTITY) {
+		BOM_LIST_QUANTITY = bOM_LIST_QUANTITY;
+	}
+	public int getBOM_DETAIL_ID() {
+		return BOM_DETAIL_ID;
+	}
+	public void setBOM_DETAIL_ID(int bOM_DETAIL_ID) {
+		BOM_DETAIL_ID = bOM_DETAIL_ID;
+	}
+	public String getFirstday() {
+		return firstday;
+	}
+	public void setFirstday(String firstday) {
+		this.firstday = firstday;
+	}
+	public String getSecondday() {
+		return secondday;
+	}
+	public void setSecondday(String secondday) {
+		this.secondday = secondday;
+	}
+	public String getORIGIN_ACCOUNT_MEMBERNAME() {
+		return ORIGIN_ACCOUNT_MEMBERNAME;
+	}
+	public void setORIGIN_ACCOUNT_MEMBERNAME(String oRIGIN_ACCOUNT_MEMBERNAME) {
+		ORIGIN_ACCOUNT_MEMBERNAME = oRIGIN_ACCOUNT_MEMBERNAME;
+	}
+	public String getBOM_DETAIL_DIVISION() {
+		return BOM_DETAIL_DIVISION;
+	}
+	public void setBOM_DETAIL_DIVISION(String bOM_DETAIL_DIVISION) {
+		BOM_DETAIL_DIVISION = bOM_DETAIL_DIVISION;
+	}
+	public int getBOM_DETAIL_INDEX() {
+		return BOM_DETAIL_INDEX;
+	}
+	public void setBOM_DETAIL_INDEX(int bOM_DETAIL_INDEX) {
+		BOM_DETAIL_INDEX = bOM_DETAIL_INDEX;
+	}
+	public int getBOM_DETAIL_LEVERL() {
+		return BOM_DETAIL_LEVERL;
+	}
+	public void setBOM_DETAIL_LEVERL(int bOM_DETAIL_LEVERL) {
+		BOM_DETAIL_LEVERL = bOM_DETAIL_LEVERL;
+	}
+	public String getBOM_DETAIL_PRODUCTCODE() {
+		return BOM_DETAIL_PRODUCTCODE;
+	}
+	public void setBOM_DETAIL_PRODUCTCODE(String bOM_DETAIL_PRODUCTCODE) {
+		BOM_DETAIL_PRODUCTCODE = bOM_DETAIL_PRODUCTCODE;
+	}
+	public String getBOM_DETAIL_PRODUCTNAME() {
+		return BOM_DETAIL_PRODUCTNAME;
+	}
+	public void setBOM_DETAIL_PRODUCTNAME(String bOM_DETAIL_PRODUCTNAME) {
+		BOM_DETAIL_PRODUCTNAME = bOM_DETAIL_PRODUCTNAME;
+	}
+	public int getBOM_DETAIL_QUANTITY() {
+		return BOM_DETAIL_QUANTITY;
+	}
+	public void setBOM_DETAIL_QUANTITY(int bOM_DETAIL_QUANTITY) {
+		BOM_DETAIL_QUANTITY = bOM_DETAIL_QUANTITY;
+	}
+	public Date getBOM_DETAIL_CREATEDATE() {
+		return BOM_DETAIL_CREATEDATE;
+	}
+	public void setBOM_DETAIL_CREATEDATE(Date bOM_DETAIL_CREATEDATE) {
+		BOM_DETAIL_CREATEDATE = bOM_DETAIL_CREATEDATE;
+	}
+	public String getBOM_DETAIL_BELLOWSCODE() {
+		return BOM_DETAIL_BELLOWSCODE;
+	}
+	public void setBOM_DETAIL_BELLOWSCODE(String bOM_DETAIL_BELLOWSCODE) {
+		BOM_DETAIL_BELLOWSCODE = bOM_DETAIL_BELLOWSCODE;
+	}
+	public String getBOM_DETAIL_MOLDTYPE() {
+		return BOM_DETAIL_MOLDTYPE;
+	}
+	public void setBOM_DETAIL_MOLDTYPE(String bOM_DETAIL_MOLDTYPE) {
+		BOM_DETAIL_MOLDTYPE = bOM_DETAIL_MOLDTYPE;
+	}
+	public String getBOM_DETAIL_MOLDNUMBER() {
+		return BOM_DETAIL_MOLDNUMBER;
+	}
+	public void setBOM_DETAIL_MOLDNUMBER(String bOM_DETAIL_MOLDNUMBER) {
+		BOM_DETAIL_MOLDNUMBER = bOM_DETAIL_MOLDNUMBER;
+	}
+	public double getBOM_DETAIL_OD() {
+		return BOM_DETAIL_OD;
+	}
+	public void setBOM_DETAIL_OD(double bOM_DETAIL_OD) {
+		BOM_DETAIL_OD = bOM_DETAIL_OD;
+	}
+	public double getBOM_DETAIL_C_ID() {
+		return BOM_DETAIL_C_ID;
+	}
+	public void setBOM_DETAIL_C_ID(double bOM_DETAIL_C_ID) {
+		BOM_DETAIL_C_ID = bOM_DETAIL_C_ID;
+	}
+	public String getBOM_DETAIL_MATERIALCODE() {
+		return BOM_DETAIL_MATERIALCODE;
+	}
+	public void setBOM_DETAIL_MATERIALCODE(String bOM_DETAIL_MATERIALCODE) {
+		BOM_DETAIL_MATERIALCODE = bOM_DETAIL_MATERIALCODE;
+	}
+	public String getBOM_DETAIL_MATERIAL() {
+		return BOM_DETAIL_MATERIAL;
+	}
+	public void setBOM_DETAIL_MATERIAL(String bOM_DETAIL_MATERIAL) {
+		BOM_DETAIL_MATERIAL = bOM_DETAIL_MATERIAL;
+	}
+	public int getBOM_DETAIL_MATERIALSIZE() {
+		return BOM_DETAIL_MATERIALSIZE;
+	}
+	public void setBOM_DETAIL_MATERIALSIZE(int bOM_DETAIL_MATERIALSIZE) {
+		BOM_DETAIL_MATERIALSIZE = bOM_DETAIL_MATERIALSIZE;
+	}
+	public double getBOM_DETAIL_MATERIALTHICK() {
+		return BOM_DETAIL_MATERIALTHICK;
+	}
+	public void setBOM_DETAIL_MATERIALTHICK(double bOM_DETAIL_MATERIALTHICK) {
+		BOM_DETAIL_MATERIALTHICK = bOM_DETAIL_MATERIALTHICK;
+	}
+	public double getBOM_DETAIL_WD() {
+		return BOM_DETAIL_WD;
+	}
+	public void setBOM_DETAIL_WD(double bOM_DETAIL_WD) {
+		BOM_DETAIL_WD = bOM_DETAIL_WD;
+	}
+	public int getBOM_FILE_MANAGEMENT_ID() {
+		return BOM_FILE_MANAGEMENT_ID;
+	}
+	public void setBOM_FILE_MANAGEMENT_ID(int bOM_FILE_MANAGEMENT_ID) {
+		BOM_FILE_MANAGEMENT_ID = bOM_FILE_MANAGEMENT_ID;
+	}
+	public String getBOM_FILE_MANAGEMENT_NAME() {
+		return BOM_FILE_MANAGEMENT_NAME;
+	}
+	public void setBOM_FILE_MANAGEMENT_NAME(String bOM_FILE_MANAGEMENT_NAME) {
+		BOM_FILE_MANAGEMENT_NAME = bOM_FILE_MANAGEMENT_NAME;
+	}
+	public String getBOM_FILE_MANAGEMENT_DIRECTORY() {
+		return BOM_FILE_MANAGEMENT_DIRECTORY;
+	}
+	public void setBOM_FILE_MANAGEMENT_DIRECTORY(String bOM_FILE_MANAGEMENT_DIRECTORY) {
+		BOM_FILE_MANAGEMENT_DIRECTORY = bOM_FILE_MANAGEMENT_DIRECTORY;
+	}
+	public int getBOM_LIST_ID() {
+		return BOM_LIST_ID;
+	}
+	public void setBOM_LIST_ID(int bOM_LIST_ID) {
+		BOM_LIST_ID = bOM_LIST_ID;
+	}
+	public int getORIGIN_ACCOUNT_ID() {
+		return ORIGIN_ACCOUNT_ID;
+	}
+	public void setORIGIN_ACCOUNT_ID(int oRIGIN_ACCOUNT_ID) {
+		ORIGIN_ACCOUNT_ID = oRIGIN_ACCOUNT_ID;
+	}
+	public String getBOM_LIST_DIVISION() {
+		return BOM_LIST_DIVISION;
+	}
+	public void setBOM_LIST_DIVISION(String bOM_LIST_DIVISION) {
+		BOM_LIST_DIVISION = bOM_LIST_DIVISION;
+	}
+	public String getBOM_LIST_MAIN_NAME() {
+		return BOM_LIST_MAIN_NAME;
+	}
+	public void setBOM_LIST_MAIN_NAME(String bOM_LIST_MAIN_NAME) {
+		BOM_LIST_MAIN_NAME = bOM_LIST_MAIN_NAME;
+	}
+	public String getBOM_LIST_MAIN_PRODUCTCODE() {
+		return BOM_LIST_MAIN_PRODUCTCODE;
+	}
+	public void setBOM_LIST_MAIN_PRODUCTCODE(String bOM_LIST_MAIN_PRODUCTCODE) {
+		BOM_LIST_MAIN_PRODUCTCODE = bOM_LIST_MAIN_PRODUCTCODE;
+	}
+	public Date getBOM_LIST_CREATEDATE() {
+		return BOM_LIST_CREATEDATE;
+	}
+	public void setBOM_LIST_CREATEDATE(Date bOM_LIST_CREATEDATE) {
+		BOM_LIST_CREATEDATE = bOM_LIST_CREATEDATE;
+	}
+	
+	
+}

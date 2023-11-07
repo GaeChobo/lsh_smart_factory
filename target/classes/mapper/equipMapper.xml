@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.equipMapper">
+ 
+    <select id = "EquipMatchingList" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+		select 
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_ID,
+			PROCESS_MAIN_CATEGORY.PROCESS_MAIN_CATEGORY_NAME,
+			ORIGIN_EQUIPMENT.ORIGIN_EQUIPMENT_NAME,
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_NUMBER,
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_NAME
+		from EQUIPMENT_SENSOR_MATCHING
+		inner join ORIGIN_EQUIPMENT on ORIGIN_EQUIPMENT.ORIGIN_EQUIPMENT_ID = EQUIPMENT_SENSOR_MATCHING.ORIGIN_EQUIPMENT_ID
+		inner join PROCESS_MAIN_CATEGORY on PROCESS_MAIN_CATEGORY.PROCESS_MAIN_CATEGORY_ID = ORIGIN_EQUIPMENT.PROCESS_MAIN_CATEGORY_ID
+    </select>
+    
+    <update id = "EquipSensorMatching">
+        update EQUIPMENT_SENSOR_MATCHING set
+        	ORIGIN_EQUIPMENT_ID = #{ORIGIN_EQUIPMENT_ID}
+        where EQUIPMENT_SENSOR_MATCHING_ID = #{EQUIPMENT_SENSOR_MATCHING_ID}
+    </update>
+    
+        <update id = "EquipSensorMatchingDelete">
+        update EQUIPMENT_SENSOR_MATCHING set
+        	ORIGIN_EQUIPMENT_ID = NULL
+        where EQUIPMENT_SENSOR_MATCHING_ID = #{EQUIPMENT_SENSOR_MATCHING_ID}
+    </update>
+    
+    <select id = "EquipSensorList" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+		select
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_ID,
+			EQUIPMENT_SENSOR_INDEX.EQUIPMENT_SENSOR_INDEX_ID,
+			EQUIPMENT_SENSOR_INDEX.EQUIPMENT_SENSOR_INDEX_NAME,
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_NUMBER,
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_NAME,
+			EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_MATCHING_MODEL
+		from EQUIPMENT_SENSOR_MATCHING
+		inner join EQUIPMENT_SENSOR_INDEX on EQUIPMENT_SENSOR_INDEX.EQUIPMENT_SENSOR_INDEX_ID = EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_INDEX_ID
+		where EQUIPMENT_SENSOR_MATCHING.EQUIPMENT_SENSOR_INDEX_ID = #{EQUIPMENT_SENSOR_INDEX_ID}
+    </select>
+    
+    <select id = "EquipIndexList" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+        select * from EQUIPMENT_SENSOR_INDEX
+    </select>
+    
+    <select id = "SelectEquipList" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+		select * from ORIGIN_EQUIPMENT where PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID}
+    </select>
+    
+	<select id = "AllselectEquip" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+	    select * from ORIGIN_EQUIPMENT
+	</select>
+	<select id = "SelectProcessEquip" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+		select * from ORIGIN_EQUIPMENT where PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID} and not ORIGIN_EQUIPMENT_NAME = '해당없음'	
+	</select>
+	
+	<select id = "SelectWorkerEquip" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+	    select * from ORIGIN_EQUIPMENT where PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID}
+	</select>
+	
+	<select id = "ProcessIdChk" resultType = "int">
+	    select count(*) from ORIGIN_PROCESS WHERE PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID}
+	</select>
+	<select id = "EquipIdCheck" resultType = "int">
+	    select count(*) from ORIGIN_EQUIPMENT WHERE ORIGIN_EQUIPMENT_ID = #{ORIGIN_EQUIPMENT_ID}
+	</select>
+	<select id = "SearchEquip" resultType = "com.lsh.testing05.equip.vo.EquipVO">
+	    select * from ORIGIN_EQUIPMENT
+	    	where ORIGIN_EQUIPMENT_NAME like '%'+#{ORIGIN_EQUIPMENT_NAME}+'%' and PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID} and not ORIGIN_EQUIPMENT_NAME = '해당없음'	
+	</select>
+	<insert id="RegisterEquip">
+	    insert into ORIGIN_EQUIPMENT(
+			PROCESS_MAIN_CATEGORY_ID,
+	    	ORIGIN_EQUIPMENT_NAME,
+	    	ORIGIN_EQUIPMENT_MODELNAME,
+	    	ORIGIN_EQUIPMENT_CONTEXT)
+	    values(
+	    #{PROCESS_MAIN_CATEGORY_ID},
+	    #{ORIGIN_EQUIPMENT_NAME},
+	    #{ORIGIN_EQUIPMENT_MODELNAME},
+	    #{ORIGIN_EQUIPMENT_CONTEXT})
+	</insert>
+	
+	<update id ="UpdateEquip">
+	    UPDATE ORIGIN_EQUIPMENT SET
+	    	ORIGIN_EQUIPMENT_NAME = #{ORIGIN_EQUIPMENT_NAME},
+	    	ORIGIN_EQUIPMENT_MODELNAME = #{ORIGIN_EQUIPMENT_MODELNAME},
+	    	ORIGIN_EQUIPMENT_CONTEXT = #{ORIGIN_EQUIPMENT_CONTEXT}
+	    WHERE ORIGIN_EQUIPMENT_ID = #{ORIGIN_EQUIPMENT_ID}
+	</update>
+	
+	<delete id = "DeleteEquip">
+	    Delete from ORIGIN_EQUIPMENT WHERE ORIGIN_EQUIPMENT_ID = #{ORIGIN_EQUIPMENT_ID}
+	</delete>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.fileMapper">
+    <insert id = "PresetFileUpload">
+        Insert into SETTING_PRESET_FILE_MANAGEMENT(
+        	SETTING_PRESET_ID,
+        	SETTING_PRESET_CT_FILE_ID,
+        	SETTING_PRESET_CT_FILE_REGISTER_ID,
+        	SETTING_PRESET_CT_FILE_DIVISION_ID,
+        	SETTING_PRESET_FILE_MANAGEMENT_NAME,
+        	SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY)
+        values(
+        	#{SETTING_PRESET_ID},
+        	#{SETTING_PRESET_CT_FILE_ID},
+        	#{SETTING_PRESET_CT_FILE_REGISTER_ID},
+        	#{SETTING_PRESET_CT_FILE_DIVISION_ID},
+        	#{SETTING_PRESET_FILE_MANAGEMENT_NAME},
+        	#{SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY})
+    </insert>
+    <select id = "SelectPresetFileName" resultType = "com.lsh.testing05.file.vo.FileVO">
+        select 
+        	SETTING_PRESET_CT_FILE_ID, 
+        	SETTING_PRESET_CT_FILE_REGISTER_ID, 
+        	SETTING_PRESET_CT_FILE_DIVISION_ID, 
+        	SETTING_PRESET_FILE_MANAGEMENT_NAME, 
+        	SETTING_PRESET_FILE_MANAGEMENT_DIRECTORY
+        from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    <select id = "SelectPresetFile" resultType = "com.lsh.testing05.file.vo.FileVO">
+        select * from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </select>
+    
+    <delete id = "AllDeletePresetFile">
+        delete from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID}
+    </delete>
+    
+    <delete id = "DeletePresetFile">
+        delete from SETTING_PRESET_FILE_MANAGEMENT where SETTING_PRESET_ID = #{SETTING_PRESET_ID} and SETTING_PRESET_FILE_MANAGEMENT_ID = #{SETTING_PRESET_FILE_MANAGEMENT_ID}
+    </delete>
+</mapper>

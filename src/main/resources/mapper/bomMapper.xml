@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.bomMapper">
+    
+    <select id = "SearchJobNumBomDetail" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select 
+			BOM_DETAIL.BOM_DETAIL_ID,
+			BOM_DETAIL.BOM_LIST_ID,
+			BOM_DETAIL.BOM_DETAIL_DIVISION,
+			BOM_DETAIL.BOM_DETAIL_LEVERL,
+			BOM_DETAIL.BOM_DETAIL_PRODUCTCODE,
+			BOM_DETAIL.BOM_DETAIL_PRODUCTNAME,
+			BOM_DETAIL.BOM_DETAIL_QUANTITY,
+			BOM_DETAIL.BOM_DETAIL_CREATEDATE,
+			BOM_DETAIL.BOM_DETAIL_BELLOWSCODE,
+			BOM_DETAIL.BOM_DETAIL_MOLDTYPE,
+			BOM_DETAIL.BOM_DETAIL_MOLDNUMBER,
+			BOM_DETAIL.BOM_DETAIL_OD,
+			BOM_DETAIL.BOM_DETAIL_C_ID,
+			BOM_DETAIL.BOM_DETAIL_MATERIALCODE,
+			BOM_DETAIL.BOM_DETAIL_MATERIAL,
+			BOM_DETAIL.BOM_DETAIL_MATERIALSIZE,
+			BOM_DETAIL.BOM_DETAIL_MATERIALTHICK,
+			BOM_DETAIL.BOM_DETAIL_WD
+		from 
+		BOM_DETAIL
+		inner join JOBORDER on JOBORDER.BOM_DETAIL_ID = BOM_DETAIL.BOM_DETAIL_ID
+		inner join JOBORDER_DETAIL on JOBORDER_DETAIL.JOBORDER_DETAIL_ID = JOBORDER.JOBORDER_DETAIL_ID
+		where JOBORDER_DETAIL_JOBNUMBER Like #{SEARCH_WORD} and JOBORDER.BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <select id = "FindBomJobNum" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select
+			JOBORDER.BOM_LIST_ID,
+			JOBORDER_DETAIL.JOBORDER_DETAIL_JOBNUMBER,
+			JOBORDER.BOM_DETAIL_ID
+		from JOBORDER  
+		inner join JOBORDER_DETAIL on JOBORDER.JOBORDER_DETAIL_ID = JOBORDER_DETAIL.JOBORDER_DETAIL_ID
+		where BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <select id = "SearchBomDetail" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select * from BOM_DETAIL
+        where BOM_DETAIL_PRODUCTNAME Like '%'+#{SEARCH_WORD}+'%' 
+        or BOM_DETAIL_PRODUCTCODE Like '%'+#{SEARCH_WORD}+'%' 
+        and BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <select id = "BomNullChk" resultType = "int">
+        select
+			count(case when BOM_DETAIL_BELLOWSCODE is null then 1 end) as 'BOM_NULL_COUNT'
+		from BOM_DETAIL 
+		where BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <select id = "BomDelChk" resultType = "int" >
+        select count(*) from JOBORDER where BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <insert id = "RegisterBomlist">
+        insert into BOM_LIST(
+        	ORIGIN_ACCOUNT_ID,
+        	BOM_LIST_DIVISION,
+        	BOM_LIST_MAIN_NAME,
+        	BOM_LIST_MAIN_PRODUCTCODE,
+        	BOM_LIST_QUANTITY)
+        values(
+        #{ORIGIN_ACCOUNT_ID},
+        #{BOM_LIST_DIVISION},
+        #{BOM_LIST_MAIN_NAME},
+        #{BOM_LIST_MAIN_PRODUCTCODE},
+        #{BOM_LIST_QUANTITY})
+        <selectKey keyProperty = "BOM_LIST_ID" resultType = "int">
+            SELECT @@IDENTITY as BOM_LIST_ID
+        </selectKey>
+    </insert>
+    
+    <insert id = "UploadBomFile">
+        insert BOM_FILE_MANAGEMENT(
+        	BOM_LIST_ID,
+        	BOM_FILE_MANAGEMENT_NAME,
+        	BOM_FILE_MANAGEMENT_DIRECTORY)
+        values(
+        	#{BOM_LIST_ID},
+        	#{BOM_FILE_MANAGEMENT_NAME},
+        	#{BOM_FILE_MANAGEMENT_DIRECTORY}
+        	)
+    </insert>
+    
+    <insert id = "RegisterBomDetailA">
+        insert into BOM_DETAIL(
+        	BOM_LIST_ID,
+        	ORIGIN_ACCOUNT_ID,
+        	BOM_DETAIL_DIVISION,
+        	BOM_DETAIL_INDEX,
+        	BOM_DETAIL_LEVERL,
+        	BOM_DETAIL_PRODUCTCODE,
+        	BOM_DETAIL_PRODUCTNAME,
+        	BOM_DETAIL_QUANTITY)
+        values(
+        	#{BOM_LIST_ID},
+        	#{ORIGIN_ACCOUNT_ID},
+        	#{BOM_DETAIL_DIVISION},
+        	#{BOM_DETAIL_INDEX},
+        	#{BOM_DETAIL_LEVERL},
+        	#{BOM_DETAIL_PRODUCTCODE},
+        	#{BOM_DETAIL_PRODUCTNAME},
+        	#{BOM_DETAIL_QUANTITY}
+        	)
+    </insert>
+    
+  <insert id = "RegisterBomDetailB">
+        insert into BOM_DETAIL(
+        	BOM_LIST_ID,
+        	ORIGIN_ACCOUNT_ID,
+        	BOM_DETAIL_DIVISION,
+        	BOM_DETAIL_INDEX,
+        	BOM_DETAIL_LEVERL,
+        	BOM_DETAIL_PRODUCTCODE,
+        	BOM_DETAIL_PRODUCTNAME,
+        	BOM_DETAIL_QUANTITY,
+        	BOM_DETAIL_BELLOWSCODE,
+        	BOM_DETAIL_MOLDTYPE,
+        	BOM_DETAIL_MOLDNUMBER,
+        	BOM_DETAIL_OD,
+        	BOM_DETAIL_C_ID,
+        	BOM_DETAIL_MATERIALCODE,
+        	BOM_DETAIL_MATERIAL,
+        	BOM_DETAIL_MATERIALSIZE,
+        	BOM_DETAIL_MATERIALTHICK,
+        	BOM_DETAIL_WD
+        	)
+        values(
+        	#{BOM_LIST_ID},
+        	#{ORIGIN_ACCOUNT_ID},
+        	#{BOM_DETAIL_DIVISION},
+        	#{BOM_DETAIL_INDEX},
+        	#{BOM_DETAIL_LEVERL},
+        	#{BOM_DETAIL_PRODUCTCODE},
+        	#{BOM_DETAIL_PRODUCTNAME},
+        	#{BOM_DETAIL_QUANTITY},
+        	#{BOM_DETAIL_BELLOWSCODE},
+        	#{BOM_DETAIL_MOLDTYPE},
+        	#{BOM_DETAIL_MOLDNUMBER},
+        	#{BOM_DETAIL_OD},
+        	#{BOM_DETAIL_C_ID},
+        	#{BOM_DETAIL_MATERIALCODE},
+        	#{BOM_DETAIL_MATERIAL},
+        	#{BOM_DETAIL_MATERIALSIZE},
+        	#{BOM_DETAIL_MATERIALTHICK},
+        	#{BOM_DETAIL_WD}
+        	)
+    </insert>
+    
+  	<select id = "ViewBomDetail" resultType = "com.lsh.testing05.bom.vo.BomVO">
+  	    select * from BOM_DETAIL where BOM_LIST_ID = #{BOM_LIST_ID}
+  	</select>
+  
+  	<select id = "ViewBomDetailA" resultType = "com.lsh.testing05.bom.vo.BomVO">
+  	    select
+			BOM_DETAIL_ID,
+			BOM_LIST_ID,
+			ORIGIN_ACCOUNT_ID,
+			BOM_DETAIL_DIVISION,
+			BOM_DETAIL_INDEX,
+			BOM_DETAIL_LEVERL,
+			BOM_DETAIL_PRODUCTCODE,
+			BOM_DETAIL_PRODUCTNAME,
+			BOM_DETAIL_QUANTITY,
+			BOM_DETAIL_CREATEDATE
+		from BOM_DETAIL where BOM_LIST_ID = #{BOM_LIST_ID}
+  	</select>
+  	
+    <select id = "ViewBomList" resultType = "com.lsh.testing05.bom.vo.BomVO">
+       select 
+       		BOM_LIST.BOM_LIST_ID,
+       		BOM_LIST.BOM_LIST_MAIN_PRODUCTCODE,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+       		BOM_LIST.BOM_LIST_DIVISION,
+       		BOM_LIST.BOM_LIST_MAIN_NAME,
+       		BOM_LIST.BOM_LIST_CREATEDATE
+       from BOM_LIST INNER JOIN ORIGIN_ACCOUNT ON BOM_LIST.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+       order by BOM_LIST_CREATEDATE desc
+    </select>
+    
+    <select id = "CreateDayFindView" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select 
+        	BOM_LIST.BOM_LIST_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+       		BOM_LIST.BOM_LIST_DIVISION,
+       		BOM_LIST.BOM_LIST_MAIN_NAME,
+       		BOM_LIST.BOM_LIST_MAIN_PRODUCTCODE,
+       		BOM_LIST.BOM_LIST_CREATEDATE
+       	from BOM_LIST INNER JOIN ORIGIN_ACCOUNT ON BOM_LIST.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+       	where CONVERT(int, CONVERT(VARCHAR(8), BOM_LIST_CREATEDATE,112)) between #{firstday} and #{secondday}
+       	order by BOM_LIST_CREATEDATE desc
+    </select>
+    
+    <select id = "AllListFindView" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select 
+        	BOM_LIST.BOM_LIST_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+       		BOM_LIST.BOM_LIST_DIVISION,
+       		BOM_LIST.BOM_LIST_MAIN_NAME,
+       		BOM_LIST.BOM_LIST_MAIN_PRODUCTCODE,
+       		BOM_LIST.BOM_LIST_CREATEDATE
+       	from BOM_LIST INNER JOIN ORIGIN_ACCOUNT ON BOM_LIST.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+       	where CONVERT(int, CONVERT(VARCHAR(8), BOM_LIST_CREATEDATE,112)) between #{firstday} and #{secondday} and
+       	BOM_LIST_MAIN_NAME Like '%'+#{BOM_LIST_MAIN_NAME}+'%' and BOM_LIST_MAIN_PRODUCTCODE Like '%'+#{BOM_LIST_MAIN_PRODUCTCODE}+'%' and ORIGIN_ACCOUNT_MEMBERNAME Like '%'+#{ORIGIN_ACCOUNT_MEMBERNAME}+'%'
+       	order by BOM_LIST_CREATEDATE desc
+    </select>
+    
+    <select id = "SearchBomListFindView" resultType = "com.lsh.testing05.bom.vo.BomVO">
+        select 
+        	BOM_LIST.BOM_LIST_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID,
+       		ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_MEMBERNAME,
+       		BOM_LIST.BOM_LIST_DIVISION,
+       		BOM_LIST.BOM_LIST_MAIN_NAME,
+       		BOM_LIST.BOM_LIST_MAIN_PRODUCTCODE,
+       		BOM_LIST.BOM_LIST_CREATEDATE
+       	from BOM_LIST INNER JOIN ORIGIN_ACCOUNT ON BOM_LIST.ORIGIN_ACCOUNT_ID = ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID
+       	where BOM_LIST_MAIN_NAME Like '%'+#{BOM_LIST_MAIN_NAME}+'%' and BOM_LIST_MAIN_PRODUCTCODE Like '%'+#{BOM_LIST_MAIN_PRODUCTCODE}+'%' and ORIGIN_ACCOUNT_MEMBERNAME Like '%'+#{ORIGIN_ACCOUNT_MEMBERNAME}+'%'
+       	order by BOM_LIST_CREATEDATE desc
+    </select>
+    
+    <select id = "BomfileDriectoryFind" resultType = "String">
+        select BOM_FILE_MANAGEMENT_DIRECTORY from BOM_FILE_MANAGEMENT where BOM_LIST_ID = #{BOM_LIST_ID}
+    </select>
+    
+    <delete id = "DeleteBomDetail">
+        delete from BOM_DETAIL where BOM_LIST_ID = #{BOM_LIST_ID}
+    </delete>
+    
+    <delete id = "DeleteBomFile">
+        delete from BOM_FILE_MANAGEMENT where BOM_LIST_ID = #{BOM_LIST_ID}
+    </delete>
+    
+    <delete id = "DeleteBomlist">
+        delete from BOM_LIST where BOM_LIST_ID = #{BOM_LIST_ID}
+    </delete>
+</mapper>

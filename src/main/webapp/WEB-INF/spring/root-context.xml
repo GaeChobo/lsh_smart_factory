@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/task  http://www.springframework.org/schema/task/spring-task.xsd">
+		
+	<context:component-scan base-package="com.lsh.testing05" /> 
+	<task:scheduler id="jobScheduler" pool-size="10" /> 
+	<task:annotation-driven scheduler="jobScheduler" />
+
+	<bean id = "ScheduleController" class = "com.lsh.testing05.ScheduleController" />
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+	    <property name="url" value="jdbc:sqlserver://localhost:5992;databaseName=SFactory" />
+	    <property name="username" value="sa" />
+	    <property name="password" value="1234" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+             <property name="dataSource" ref="dataSource"></property>
+                  <!-- mybatis-config.xml이 스프링 시작될때 같이 실행되도록 설정하기  -->
+             <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+             <property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
+    </bean>
+   
+   	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>   
+    </bean>
+	<!-- Origin_Member -->
+	<context:component-scan base-package="com.lsh.testing05.member.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.member.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.member.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.member.service"></context:component-scan>
+	
+	<!-- Origin_Process -->
+	<context:component-scan base-package="com.lsh.testing05.process.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.process.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.process.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.process.service"></context:component-scan>
+	
+	<!-- Origin_Equip -->
+	<context:component-scan base-package="com.lsh.testing05.equip.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.equip.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.equip.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.equip.service"></context:component-scan>
+	
+	<!-- Origin_Uniquess --> 
+	<context:component-scan base-package="com.lsh.testing05.uniquess.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.uniquess.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.uniquess.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.uniquess.service"></context:component-scan>
+	
+	<!--  Setting Preset -->
+	<context:component-scan base-package="com.lsh.testing05.settingpreset.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpreset.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpreset.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpreset.service"></context:component-scan>
+	
+	<!-- Setting PresetProcess -->
+	<context:component-scan base-package="com.lsh.testing05.settingpresetprocess.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetprocess.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetprocess.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetprocess.service"></context:component-scan>
+	
+	<!-- Setting PresetProcessUniquess -->
+	<context:component-scan base-package="com.lsh.testing05.settingpresetuniquess.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetuniquess.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetuniquess.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.settingpresetuniquess.service"></context:component-scan>
+	
+	<!-- File Util -->
+	<context:component-scan base-package="com.lsh.testing05.file.util"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.file.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.file.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.file.service"></context:component-scan>
+	
+	<!-- Bom -->
+	<context:component-scan base-package="com.lsh.testing05.bom.exception"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.bom.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.bom.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.bom.service"></context:component-scan>
+	
+	<!-- QR Code -->
+	<context:component-scan base-package="com.lsh.testing05.qrcode.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.qrcode.service"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.qrcode.vo"></context:component-scan>
+	
+	<context:component-scan base-package="com.lst.testing05.customer.dao"></context:component-scan>
+	<context:component-scan base-package="com.lst.testing05.customer.service"></context:component-scan>
+	<context:component-scan base-package="com.lst.testing05.customer.vo"></context:component-scan>
+	
+	<context:component-scan base-package="com.lst.testing05.sensor.vo"></context:component-scan>
+	<context:component-scan base-package="com.lst.testing05.sensor.dao"></context:component-scan>
+	<context:component-scan base-package="com.lst.testing05.sensor.service"></context:component-scan>
+	
+	<context:component-scan base-package="com.lsh.testing05.cros"></context:component-scan>
+	
+	<context:component-scan base-package="com.lsh.testing05.joborder.service"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.joborder.vo"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.joborder.dao"></context:component-scan>
+	<context:component-scan base-package="com.lsh.testing05.joborder.exception"></context:component-scan>
+	
+
+	
+	
+</beans>

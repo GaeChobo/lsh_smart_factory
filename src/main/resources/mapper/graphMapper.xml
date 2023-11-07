@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.graphMapper">
+    
+    <!--  첫페이지 , 전체 '-' 일 경우에 출력  -->
+    <select id = "SearchGraph" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select  
+			*
+		from SPECIAL_CELL_CONTEXT
+		LEFT OUTER join SPECIAL_PROCESS on SPECIAL_CELL_CONTEXT.SPECIAL_PROCESS_ID = SPECIAL_PROCESS.SPECIAL_PROCESS_ID
+		LEFT OUTER join SPECIAL_EQUIPMENT on SPECIAL_CELL_CONTEXT.SPECIAL_EQUIPMENT_ID = SPECIAL_EQUIPMENT.SPECIAL_EQUIPMENT_ID
+		LEFT OUTER join SPECIAL_BELLOWS_MATERIAL on SPECIAL_CELL_CONTEXT.SPECIAL_BELLOWS_MATERIAL_ID = SPECIAL_BELLOWS_MATERIAL.SPECIAL_BELLOWS_MATERIAL_ID
+		LEFT OUTER join SPECIAL_OD_RANGE on SPECIAL_CELL_CONTEXT.SPECIAL_OD_RANGE_ID = SPECIAL_OD_RANGE.SPECIAL_OD_RANGE_ID
+		LEFT OUTER join SPECIAL_THICKNESS on SPECIAL_CELL_CONTEXT.SPECIAL_THICKNESS_ID = SPECIAL_THICKNESS.SPECIAL_THICKNESS_ID
+		where SPECIAL_PROCESS.SPECIAL_PROCESS_NAME like '%'+#{SPECIAL_PROCESS_NAME}+'%' and 
+			SPECIAL_EQUIPMENT.SPECIAL_EQUIPMENT_NAME like '%'+#{SPECIAL_EQUIPMENT_NAME}+'%' and
+			SPECIAL_BELLOWS_MATERIAL.SPECIAL_BELLOWS_MATERIAL_NAME like '%'+#{SPECIAL_BELLOWS_MATERIAL_NAME}+'%' and
+			SPECIAL_OD_RANGE.SPECIAL_OD_RANGE_NAME like '%'+#{SPECIAL_OD_RANGE_NAME}+'%' and
+			SPECIAL_THICKNESS.SPECIAL_THICKNESS_NAME like '%'+#{SPECIAL_THICKNESS_NAME}+'%'
+    </select>
+    
+    <select id = "ProcessList" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select * from SPECIAL_PROCESS
+    </select>
+    
+    <select id = "EquipmentList" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select * from SPECIAL_EQUIPMENT
+    </select>
+    
+    <select id = "MaterialList" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select * from SPECIAL_BELLOWS_MATERIAL
+    </select>
+    
+    <select id = "ODRangeList" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select * from SPECIAL_OD_RANGE
+    </select>
+    
+    <select id = "ThicknessList" resultType = "com.lsh.testing05.graph.vo.GraphVO">
+        select * from SPECIAL_THICKNESS
+    </select>
+</mapper>

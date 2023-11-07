@@ -1,0 +1,507 @@
+package com.lsh.testing05;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.lsh.testing05.sensor.service.sensorService;
+import com.lsh.testing05.sensor.vo.sensorVO;
+
+@Component
+@Transactional
+public class ScheduleController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ScheduleController.class);
+	
+	@Autowired
+	sensorService service;
+
+	@Scheduled(cron = "0 0 0 * * *")
+	public void EquipDeleteAll() throws Exception {
+		
+		sensorVO vo = new sensorVO();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+		Calendar c2 = Calendar.getInstance();
+		
+		c2.setTime(new Date());
+		
+		c2.add(c2.DATE, -1);
+		
+		Date time = new Date();
+		
+		logger.info("EquipDeleteAll"+time);
+		
+		String NotToday = sdf.format(c2.getTime());
+		
+		vo.setDEL_DAY(NotToday);
+
+		//인덱스 1 문지동 오늘 기준으로 -3일전 데이터들 삭제
+		service.MC_01_DELETE(vo);
+		service.MC_02_DELETE(vo);
+		service.MC_03_DELETE(vo);
+		service.MC_04_DELETE(vo);
+		service.MC_05_DELETE(vo);
+		service.MC_06_DELETE(vo);
+		service.MC_07_DELETE(vo);
+		service.MC_08_DELETE(vo);
+		service.MC_09_DELETE(vo);
+		service.MC_10_DELETE(vo);
+		service.MC_11_DELETE(vo);
+		service.BM_01_DELETE(vo);
+		service.BM_02_DELETE(vo);
+		service.BS_01_DELETE(vo);
+		service.BS_02_DELETE(vo);
+		service.BS_03_DELETE(vo);
+		service.TC_01_DELETE(vo);
+		
+		//인덱스 2 관평동 프레스실 오늘 기준으로 -3일전 데이터들 삭제
+		service.PR_01_DELETE(vo);
+		service.PR_02_DELETE(vo);
+		service.PR_03_DELETE(vo);
+		service.BS_04_DELETE(vo);
+		service.PR_05_DELETE(vo);
+		service.TC_02_DELETE(vo);
+		
+		//인덱스 3
+		service.SP_LW_01_DELETE(vo);
+		service.SP_PW_02_DELETE(vo);
+		service.SP_PW_03_DELETE(vo);
+		service.SP_TW_04_DELETE(vo);
+		service.SP_PW_05_DELETE(vo);
+		service.SP_PW_06_DELETE(vo);
+		service.SP_PW_07_DELETE(vo);
+		service.TC_03_DELETE(vo);
+		
+		//인덱스 4
+		service.SP_WI_02_DELETE(vo);
+		service.SP_WI_04_DELETE(vo);
+		service.SP_WI_01_DELETE(vo);
+		service.SP_WI_06_DELETE(vo);
+		service.SP_WO_01_DELETE(vo);
+		service.SP_WO_05_DELETE(vo);
+		service.SP_WO_04_DELETE(vo);
+		service.SP_WO_06_DELETE(vo);
+		service.SP_WI_07_DELETE(vo);
+		service.SP_WI_08_DELETE(vo);
+		service.SP_WO_03_DELETE(vo);
+		service.SP_WI_03_DELETE(vo);
+		service.TC_04_DELETE(vo);
+		
+	}
+	
+	
+	
+	@Scheduled(cron = "0 1 0 * * *")
+	public void EquipInsertAll() throws Exception {
+		
+		sensorVO vo = new sensorVO();
+		
+		Date time = new Date();
+		
+		logger.info("EquipInsertAll"+time);
+		
+		vo.setEQUIPMENT_SENSOR_BM_01_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_BM_01_ADDRESS("2035");
+		vo.setEQUIPMENT_SENSOR_BM_01_NUMBER("BM_01");
+		vo.setEQUIPMENT_SENSOR_BM_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BM_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BM_01_WORKCOUNT(0);
+		
+		service.InsertBM01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_BM_02_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_BM_02_ADDRESS("2038");
+		vo.setEQUIPMENT_SENSOR_BM_02_NUMBER("BM_02");
+		vo.setEQUIPMENT_SENSOR_BM_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BM_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BM_02_WORKCOUNT(0);
+		
+		service.InsertBM02(vo);
+		
+		vo.setEQUIPMENT_SENSOR_BS_01_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_BS_01_ADDRESS("2041");
+		vo.setEQUIPMENT_SENSOR_BS_01_NUMBER("BS_01");
+		vo.setEQUIPMENT_SENSOR_BS_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BS_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BS_01_WORKCOUNT(0);
+		
+		service.InsertBS01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_BS_02_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_BS_02_ADDRESS("2044");
+		vo.setEQUIPMENT_SENSOR_BS_02_NUMBER("BS_02");
+		vo.setEQUIPMENT_SENSOR_BS_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BS_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BS_02_WORKCOUNT(0);
+		
+		service.InsertBS02(vo);
+		
+		vo.setEQUIPMENT_SENSOR_BS_03_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_BS_03_ADDRESS("2047");
+		vo.setEQUIPMENT_SENSOR_BS_03_NUMBER("BS_03");
+		vo.setEQUIPMENT_SENSOR_BS_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BS_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BS_03_WORKCOUNT(0);
+		
+		service.InsertBS03(vo);
+		
+		vo.setEQUIPMENT_SENSOR_BS_04_INDEX(2);
+		vo.setEQUIPMENT_SENSOR_BS_04_ADDRESS("2071");
+		vo.setEQUIPMENT_SENSOR_BS_04_NUMBER("BS_04");
+		vo.setEQUIPMENT_SENSOR_BS_04_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_BS_04_RUN(0);
+		vo.setEQUIPMENT_SENSOR_BS_04_WORKCOUNT(0);
+		
+		service.InsertBS04(vo);
+		
+		vo.setEQUIPMENT_SENSOR_MC_01_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_01_ADDRESS("2002");
+		vo.setEQUIPMENT_SENSOR_MC_01_NUMBER("MC_01");
+		vo.setEQUIPMENT_SENSOR_MC_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_01_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_01_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_01_WORKCOUNT(0);
+		
+		service.InsertMC01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_MC_02_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_02_ADDRESS("2005");
+		vo.setEQUIPMENT_SENSOR_MC_02_NUMBER("MC_02");
+		vo.setEQUIPMENT_SENSOR_MC_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_02_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_02_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_02_WORKCOUNT(0);
+		
+		service.InsertMC02(vo);
+		
+		vo.setEQUIPMENT_SENSOR_MC_03_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_03_ADDRESS("2008");
+		vo.setEQUIPMENT_SENSOR_MC_03_NUMBER("MC_03");
+		vo.setEQUIPMENT_SENSOR_MC_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_03_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_03_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_03_WORKCOUNT(0);
+		
+		service.InsertMC03(vo);
+
+		vo.setEQUIPMENT_SENSOR_MC_04_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_04_ADDRESS("2011");
+		vo.setEQUIPMENT_SENSOR_MC_04_NUMBER("MC_04");
+		vo.setEQUIPMENT_SENSOR_MC_04_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_04_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_04_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_04_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_04_WORKCOUNT(0);
+		
+		service.InsertMC04(vo);		
+	
+		vo.setEQUIPMENT_SENSOR_MC_05_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_05_ADDRESS("2014");
+		vo.setEQUIPMENT_SENSOR_MC_05_NUMBER("MC_05");
+		vo.setEQUIPMENT_SENSOR_MC_05_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_05_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_05_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_05_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_05_WORKCOUNT(0);
+		
+		service.InsertMC05(vo);		
+
+		vo.setEQUIPMENT_SENSOR_MC_06_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_06_ADDRESS("2017");
+		vo.setEQUIPMENT_SENSOR_MC_06_NUMBER("MC_06");
+		vo.setEQUIPMENT_SENSOR_MC_06_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_06_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_06_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_06_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_06_WORKCOUNT(0);
+		
+		service.InsertMC06(vo);				
+
+		vo.setEQUIPMENT_SENSOR_MC_07_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_07_ADDRESS("2020");
+		vo.setEQUIPMENT_SENSOR_MC_07_NUMBER("MC_07");
+		vo.setEQUIPMENT_SENSOR_MC_07_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_07_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_07_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_07_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_07_WORKCOUNT(0);
+		
+		service.InsertMC07(vo);
+		
+		vo.setEQUIPMENT_SENSOR_MC_08_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_08_ADDRESS("2023");
+		vo.setEQUIPMENT_SENSOR_MC_08_NUMBER("MC_08");
+		vo.setEQUIPMENT_SENSOR_MC_08_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_08_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_08_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_08_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_08_WORKCOUNT(0);
+		
+		service.InsertMC08(vo);	
+		
+		vo.setEQUIPMENT_SENSOR_MC_09_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_09_ADDRESS("2026");
+		vo.setEQUIPMENT_SENSOR_MC_09_NUMBER("MC_09");
+		vo.setEQUIPMENT_SENSOR_MC_09_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_09_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_09_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_09_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_09_WORKCOUNT(0);
+		
+		service.InsertMC09(vo);	
+		
+		vo.setEQUIPMENT_SENSOR_MC_10_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_10_ADDRESS("2029");
+		vo.setEQUIPMENT_SENSOR_MC_10_NUMBER("MC_10");
+		vo.setEQUIPMENT_SENSOR_MC_10_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_10_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_10_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_10_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_10_WORKCOUNT(0);
+		
+		service.InsertMC10(vo);	
+
+		vo.setEQUIPMENT_SENSOR_MC_11_INDEX(1);
+		vo.setEQUIPMENT_SENSOR_MC_11_ADDRESS("2032");
+		vo.setEQUIPMENT_SENSOR_MC_11_NUMBER("MC_11");
+		vo.setEQUIPMENT_SENSOR_MC_11_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_MC_11_MCREADY(0);
+		vo.setEQUIPMENT_SENSOR_MC_11_RUN(0);
+		vo.setEQUIPMENT_SENSOR_MC_11_ALARM(0);
+		vo.setEQUIPMENT_SENSOR_MC_11_WORKCOUNT(0);
+		
+		service.InsertMC11(vo);	
+		
+		vo.setEQUIPMENT_SENSOR_PR_01_INDEX(2);
+		vo.setEQUIPMENT_SENSOR_PR_01_ADDRESS("2062");
+		vo.setEQUIPMENT_SENSOR_PR_01_NUMBER("PR_01");
+		vo.setEQUIPMENT_SENSOR_PR_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_PR_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_PR_01_WORKCOUNT(0);
+		
+		service.InsertPR01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_PR_02_INDEX(2);
+		vo.setEQUIPMENT_SENSOR_PR_02_ADDRESS("2065");
+		vo.setEQUIPMENT_SENSOR_PR_02_NUMBER("PR_02");
+		vo.setEQUIPMENT_SENSOR_PR_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_PR_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_PR_02_WORKCOUNT(0);
+		
+		service.InsertPR02(vo);
+		
+		vo.setEQUIPMENT_SENSOR_PR_03_INDEX(2);
+		vo.setEQUIPMENT_SENSOR_PR_03_ADDRESS("2068");
+		vo.setEQUIPMENT_SENSOR_PR_03_NUMBER("PR_03");
+		vo.setEQUIPMENT_SENSOR_PR_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_PR_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_PR_03_WORKCOUNT(0);
+		
+		service.InsertPR03(vo);
+		
+		vo.setEQUIPMENT_SENSOR_PR_05_INDEX(2);
+		vo.setEQUIPMENT_SENSOR_PR_05_ADDRESS("2074");
+		vo.setEQUIPMENT_SENSOR_PR_05_NUMBER("PR_05");
+		vo.setEQUIPMENT_SENSOR_PR_05_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_PR_05_RUN(0);
+		vo.setEQUIPMENT_SENSOR_PR_05_WORKCOUNT(0);
+		
+		service.InsertPR05(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_ADDRESS("2082");
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_NUMBER("SP_LW_01");
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_LW_01_WORKCOUNT(0);
+		
+		service.InsertSPLW01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_ADDRESS("2085");
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_NUMBER("SP_PW_02");
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_02_WORKCOUNT(0);
+		
+		service.InsertSPPW02(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_ADDRESS("2088");
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_NUMBER("SP_PW_03");
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_03_WORKCOUNT(0);
+		
+		service.InsertSPPW03(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_ADDRESS("2094");
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_NUMBER("SP_PW_05");
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_05_WORKCOUNT(0);
+		
+		service.InsertSPPW05(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_ADDRESS("2097");
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_NUMBER("SP_PW_06");
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_06_WORKCOUNT(0);
+		
+		service.InsertSPPW06(vo);		
+
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_ADDRESS("2100");
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_NUMBER("SP_PW_07");
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_PW_07_WORKCOUNT(0);
+		
+		service.InsertSPPW07(vo);
+
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_INDEX(3);
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_ADDRESS("2091");
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_NUMBER("SP_TW_04");
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_TW_04_WORKCOUNT(0);
+		
+		service.InsertSPTW04(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_ADDRESS("2118");
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_NUMBER("SP_WI_01");
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_WORKCOUNT(0);
+		
+		service.InsertSPWI01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_ADDRESS("2118");
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_NUMBER("SP_WI_01");
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_01_WORKCOUNT(0);
+		
+		service.InsertSPWI01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_ADDRESS("2112");
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_NUMBER("SP_WI_02");
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_02_WORKCOUNT(0);
+		
+		service.InsertSPWI02(vo);		
+
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_ADDRESS("2145");
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_NUMBER("SP_WI_03");
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_03_WORKCOUNT(0);
+		
+		service.InsertSPWI03(vo);	
+
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_ADDRESS("2115");
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_NUMBER("SP_WI_04");
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_04_WORKCOUNT(0);
+		
+		service.InsertSPWI04(vo);	
+
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_ADDRESS("2121");
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_NUMBER("SP_WI_06");
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_06_WORKCOUNT(0);
+		
+		service.InsertSPWI06(vo);			
+
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_ADDRESS("2136");
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_NUMBER("SP_WI_07");
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_07_WORKCOUNT(0);
+		
+		service.InsertSPWI07(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_ADDRESS("2139");
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_NUMBER("SP_WI_08");
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WI_08_WORKCOUNT(0);
+		
+		service.InsertSPWI08(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_ADDRESS("2124");
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_NUMBER("SP_WO_01");
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_01_WORKCOUNT(0);
+		
+		service.InsertSPWO01(vo);
+		
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_ADDRESS("2142");
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_NUMBER("SP_WO_03");
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_03_WORKCOUNT(0);
+		
+		service.InsertSPWO03(vo);	
+		
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_ADDRESS("2130");
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_NUMBER("SP_WO_04");
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_04_WORKCOUNT(0);
+		
+		service.InsertSPWO04(vo);		
+		
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_ADDRESS("2127");
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_NUMBER("SP_WO_05");
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_05_WORKCOUNT(0);
+		
+		service.InsertSPWO05(vo);		
+		
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_INDEX(4);
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_ADDRESS("2133");
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_NUMBER("SP_WO_06");
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_POWERON(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_RUN(0);
+		vo.setEQUIPMENT_SENSOR_SP_WO_06_WORKCOUNT(0);
+		
+		service.InsertSPWO06(vo);	
+	}
+
+}

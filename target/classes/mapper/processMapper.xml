@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.processMapper">
+    
+    <select id = "SelectMatchingProcess" resultType = "com.lsh.testing05.process.vo.ProcessVO">
+        select
+			JOBORDER_FORM_DETAIL.JOBORDER_FORM_DETAIL_ID, 
+			JOBORDER_FORM_DETAIL.JOBORDER_FORM_DETAIL_NAME
+		from JOBORDER_FORM_DETAIL
+		inner join JOBORDER_FORM_DETAIL_MATCHING on JOBORDER_FORM_DETAIL_MATCHING.JOBORDER_FORM_DETAIL_ID = JOBORDER_FORM_DETAIL.JOBORDER_FORM_DETAIL_ID
+		where JOBORDER_FORM_DETAIL_MATCHING.ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+    </select>
+    
+    <select id = "AllselectProcess" resultType = "com.lsh.testing05.process.vo.ProcessVO">
+        Select * FROM ORIGIN_PROCESS
+    </select>
+    <select id = "SearchProcess" resultType = "com.lsh.testing05.process.vo.ProcessVO">
+        Select * FROM ORIGIN_PROCESS 
+        where ORIGIN_PROCESS_NAME LIKE '%'+#{ORIGIN_PROCESS_NAME}+'%'
+        or ORIGIN_PROCESS_CODE Like '%'+#{ORIGIN_PROCESS_NAME}+'%'
+    </select>
+    <select id = "SearchCheck">
+        Select COUNT(*) FROM ORIGIN_PROCESS WHERE ORIGIN_PROCESS_NAME LIKE '%'+#{ORIGIN_PROCESS_NAME}+'%'
+    </select>
+   	
+    <select id = "IdChkProcess" resultType = "int">
+        SELECT COUNT(*) FROM ORIGIN_PROCESS WHERE
+    </select>
+    
+    <select id = "MainProcessChk" resultType = "int">
+        select count(*) from PROCESS_MAIN_CATEGORY where PROCESS_MAIN_CATEGORY_NAME = #{PROCESS_MAIN_CATEGORY_NAME}
+    </select>
+    
+    <select id = "MainProcessList" resultType = "com.lsh.testing05.process.vo.ProcessVO">
+        Select * from PROCESS_MAIN_CATEGORY
+    </select>
+    
+    <insert id = "NewEquipRegister">
+	    insert into ORIGIN_EQUIPMENT(
+			PROCESS_MAIN_CATEGORY_ID,
+	    	ORIGIN_EQUIPMENT_NAME,
+	    	ORIGIN_EQUIPMENT_MODELNAME,
+	    	ORIGIN_EQUIPMENT_CONTEXT)
+	    values(
+	    #{PROCESS_MAIN_CATEGORY_ID},
+	    #{ORIGIN_EQUIPMENT_NAME},
+	    #{ORIGIN_EQUIPMENT_MODELNAME},
+	    #{ORIGIN_EQUIPMENT_CONTEXT})
+    </insert>
+    
+    <insert id = "MainCategoryRegister">
+        Insert into PROCESS_MAIN_CATEGORY(
+        	PROCESS_MAIN_CATEGORY_NAME)
+        values(
+        	#{PROCESS_MAIN_CATEGORY_NAME})
+		<selectKey keyProperty="PROCESS_MAIN_CATEGORY_ID"
+			resultType="int">
+			SELECT @@IDENTITY as PROCESS_MAIN_CATEGORY_ID
+		</selectKey>
+    </insert>
+    
+    <insert id = "AutoBellowsMatchingID">
+        insert into JOBORDER_FORM_DETAIL_MATCHING(
+        	ORIGIN_PROCESS_ID,
+        	JOBORDER_FORM_DETAIL_ID) 
+        values(
+        	#{ORIGIN_PROCESS_ID},
+        	13)
+    </insert>
+    <insert id = "AutoTotalMatchingID">
+        insert into JOBORDER_FORM_DETAIL_MATCHING(
+        	ORIGIN_PROCESS_ID,
+        	JOBORDER_FORM_DETAIL_ID) 
+        values(
+        	#{ORIGIN_PROCESS_ID},
+        	26)
+    </insert>
+    
+    <delete id = "DeleteMatchingID">
+        delete from JOBORDER_FORM_DETAIL_MATCHING
+        where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+    </delete>
+    
+   	<insert id = "RegisterProcess">
+   	    Insert into ORIGIN_PROCESS(
+   	    	PROCESS_MAIN_CATEGORY_ID,
+   	    	ORIGIN_PROCESS_NAME, 
+   	    	ORIGIN_PROCESS_CODE,
+   	    	ORIGIN_PROCESS_SELF_INSPECTION_REPORT_REGISTER,
+   	    	ORIGIN_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY,
+   	    	ORIGIN_PROCESS_OUTSOURCING_REGISTER,
+   	    	ORIGIN_PROCESS_CUSTOMER_NAME,
+   	    	ORIGIN_PROCESS_CUSTOMER_NUMBER) 
+   	    values(
+   	    	#{PROCESS_MAIN_CATEGORY_ID},
+   	    	#{ORIGIN_PROCESS_NAME},
+   	    	#{ORIGIN_PROCESS_CODE},
+   	    	#{ORIGIN_PROCESS_SELF_INSPECTION_REPORT_REGISTER},
+   	    	#{ORIGIN_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY},
+   	    	#{ORIGIN_PROCESS_OUTSOURCING_REGISTER},
+   	    	#{ORIGIN_PROCESS_CUSTOMER_NAME},
+   	    	#{ORIGIN_PROCESS_CUSTOMER_NUMBER}
+   	    	)
+   	    <selectKey keyProperty = "ORIGIN_PROCESS_ID" resultType = "int">
+   	        Select @@IDENTITY as ORIGIN_PROCESS_ID
+   	    </selectKey>
+   	</insert>
+   	
+   	<insert id="ALLRegisterEquip">
+	    insert into ORIGIN_EQUIPMENT(
+			PROCESS_MAIN_CATEGORY_ID,
+	    	ORIGIN_EQUIPMENT_NAME,
+	    	ORIGIN_EQUIPMENT_MODELNAME)
+	    values(
+	    #{PROCESS_MAIN_CATEGORY_ID},
+	    #{ORIGIN_EQUIPMENT_NAME},
+	    #{ORIGIN_EQUIPMENT_MODELNAME})
+	</insert>
+	
+   	<insert id = "ALLRegisterUniquess">
+	    insert into ORIGIN_UNIQUESS(
+	    	ORIGIN_PROCESS_ID,
+	    	ORIGIN_UNIQUESS_CONTEXT)
+	    values(
+	    	#{ORIGIN_PROCESS_ID},
+	    	#{ORIGIN_UNIQUESS_CONTEXT})
+	</insert>
+	
+   	<select id = "PresetChkProcess" resultType = "int">
+   	    select count(*) from SETTING_PRESET_PROCESS where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+   	</select>
+   	
+   	<delete id = "DeleteProcess">
+   	    Delete from ORIGIN_PROCESS 
+   	    where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+   	</delete>
+   	
+   	<delete id = "AllDeleteUniquess">
+   	    Delete from ORIGIN_UNIQUESS
+   	    where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+   	</delete>
+   	
+   	<update id = "UpdateProcess">
+   	    update ORIGIN_PROCESS set
+   	    	PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID},
+   	    	ORIGIN_PROCESS_NAME = #{ORIGIN_PROCESS_NAME},
+   	    	ORIGIN_PROCESS_CODE = #{ORIGIN_PROCESS_CODE},
+   	    	ORIGIN_PROCESS_SELF_INSPECTION_REPORT_REGISTER = #{ORIGIN_PROCESS_SELF_INSPECTION_REPORT_REGISTER},
+   	    	ORIGIN_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY = #{ORIGIN_PROCESS_SELF_INSPECTION_REPORT_DIRECTORY},
+   	    	ORIGIN_PROCESS_OUTSOURCING_REGISTER = #{ORIGIN_PROCESS_OUTSOURCING_REGISTER},
+   	    	ORIGIN_PROCESS_CUSTOMER_NAME = #{ORIGIN_PROCESS_CUSTOMER_NAME},
+   	    	ORIGIN_PROCESS_CUSTOMER_NUMBER = #{ORIGIN_PROCESS_CUSTOMER_NUMBER}
+   	    	Where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+   	</update>
+   	
+   	<select id = "NameChkProcess" resultType = "int">
+   	    SELECT COUNT(*) FROM ORIGIN_PROCESS
+   	     WHERE ORIGIN_PROCESS_NAME = #{ORIGIN_PROCESS_NAME}
+   	</select>
+   	
+   	<select id = "CodeCkhProcess" resultType = "int">
+   	    SELECT COUNT(*) FROM ORIGIN_PROCESS
+   	     WHERE ORIGIN_PROCESS_CODE = #{ORIGIN_PROCESS_CODE}
+   	</select>
+   	
+</mapper>

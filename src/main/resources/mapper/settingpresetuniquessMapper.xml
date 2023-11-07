@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "mapper.settingpresetuniquessMapper">
+    <insert id = "RegisterSettingPresetUniquess">
+        insert into SETTING_PRESET_PROCESS_UNIQUESS(
+        	SETTING_PRESET_PROCESS_ID,
+        	ORIGIN_UNIQUESS_ID)
+        values(
+        	#{SETTING_PRESET_PROCESS_ID},
+        	#{ORIGIN_UNIQUESS_ID})
+    </insert>
+    <!-- 공정 관련 특이사항 조회 -->
+    <select id = "SelectSettingPresetUniquess">
+        select * from ORIGIN_UNIQUESS where 
+    </select>
+   
+</mapper>

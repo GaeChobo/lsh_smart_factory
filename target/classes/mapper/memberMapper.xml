@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.memberMapper">
+    
+    <delete id = "DeleteMember">
+        Delete from ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </delete>
+    
+    <delete id = "DeleteWorkerProperty">
+    	Delete from WORKER_PROPERTY where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </delete>
+    
+    <select id = "FindMemberID" resultType = "int">
+        select ORIGIN_ACCOUNT_ID from ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select>
+    
+    <select id = "SelectDivisionId" resultType = "int">
+        select ORIGIN_ACCOUNT_DIVISION_ID from ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select>
+    
+    <select id ="PassFinding" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        SELECT * FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select>
+    
+    <select id = "PassFinding01" resultType = "Integer">
+        SELECT COUNT(*) FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select>
+    
+    <select id = "PassFinding02" resultType = "Integer">
+        SELECT COUNT(*) FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER}
+    </select>
+    
+    <!-- 패스워드 체크 -->
+    <select id = "PassChkMember" resultType = "int">
+        SELECT COUNT(*) FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER} and ORIGIN_ACCOUNT_PASSWORD = #{ORIGIN_ACCOUNT_PASSWORD}
+    </select>
+    <select id = "CheckMember" resultType = "int">
+        SELECT COUNT(*) FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select> 
+    
+    <select id = "CreateDayFind" resultType = "com.lsh.testing05.member.vo.MemberVO" >
+        select * from ORIGIN_ACCOUNT where CONVERT(int, CONVERT(VARCHAR(8), ORIGIN_ACCOUNT_CREATEDATE,112)) between #{firstline} and #{secondline}
+    </select>
+    
+    <select id = "SelectWorkerPropertyMain" resultType = "com.lsh.testing05.member.vo.MemberVO">
+		select * 
+		from WORKER_PROPERTY 
+		inner JOIN ORIGIN_ACCOUNT on ORIGIN_ACCOUNT.ORIGIN_ACCOUNT_ID = WORKER_PROPERTY.ORIGIN_ACCOUNT_ID
+		where PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID}
+    </select>
+    
+    <update id = "UpdateMember">
+        UPDATE ORIGIN_ACCOUNT SET 
+        	ORIGIN_ACCOUNT_DIVISION_ID = #{ORIGIN_ACCOUNT_DIVISION_ID}, 
+        	ORIGIN_ACCOUNT_MEMBERNAME = #{ORIGIN_ACCOUNT_MEMBERNAME},
+        	ORIGIN_ACCOUNT_TYPE = #{ORIGIN_ACCOUNT_TYPE},
+        	ORIGIN_ACCOUNT_DEPARTMENT = #{ORIGIN_ACCOUNT_DEPARTMENT},
+        	ORIGIN_ACCOUNT_TIER = #{ORIGIN_ACCOUNT_TIER},
+        	ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID = #{ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID},
+        	ORIGIN_ACCOUNT_PASSWORD = #{ORIGIN_ACCOUNT_PASSWORD}
+        WHERE ORIGIN_ACCOUNT_RESIDENTNUMBER = #{ORIGIN_ACCOUNT_RESIDENTNUMBER} and ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </update>
+    <select id = "WorketMemberSelect" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_DIVISION_ID = 1 or ORIGIN_ACCOUNT_DIVISION_ID = 3
+		order by ORIGIN_ACCOUNT_ID DESC
+    </select>
+    
+        <select id = "AdminMemberSelect" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_DIVISION_ID = 2
+    </select>
+    
+    <select id = "AllselectMember" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from ORIGIN_ACCOUNT
+    </select>
+    
+    <select id = "FindImgDirectory" resultType = "String">
+        select ORIGIN_ACCOUNT_IMG_DIRECTORY from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </select>
+    
+    <select id = "LoginMember" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        SELECT ORIGIN_ACCOUNT_EMPLOYEENUMBER, ORIGIN_ACCOUNT_PASSWORD FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER} AND ORIGIN_ACCOUNT_PASSWORD = #{ORIGIN_ACCOUNT_PASSWORD}
+    </select>
+    
+    <select id="IdChkMember" resultType = "int">
+    	SELECT COUNT(*) FROM ORIGIN_ACCOUNT WHERE ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER}
+    </select>
+    
+    <select id="LoginReturn" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER} and ORIGIN_ACCOUNT_PASSWORD = #{ORIGIN_ACCOUNT_PASSWORD}
+    </select>
+    
+    <select id="LoginReturntest" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from ORIGIN_ACCOUNT where ORIGIN_ACCOUNT_EMPLOYEENUMBER = #{ORIGIN_ACCOUNT_EMPLOYEENUMBER} and ORIGIN_ACCOUNT_PASSWORD = #{ORIGIN_ACCOUNT_PASSWORD}
+    </select>
+    
+    <insert id = "RegisterMember">
+        insert into ORIGIN_ACCOUNT(
+			ORIGIN_ACCOUNT_DIVISION_ID,
+			ORIGIN_ACCOUNT_MEMBERNAME,
+			ORIGIN_ACCOUNT_PASSWORD,
+			ORIGIN_ACCOUNT_TYPE,
+			ORIGIN_ACCOUNT_EMPLOYEENUMBER,
+			ORIGIN_ACCOUNT_DEPARTMENT,
+			ORIGIN_ACCOUNT_TIER,
+			ORIGIN_ACCOUNT_RESIDENTNUMBER,
+			ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID,
+			ORIGIN_ACCOUNT_IMG_DIRECTORY)
+		values(
+		#{ORIGIN_ACCOUNT_DIVISION_ID},
+		#{ORIGIN_ACCOUNT_MEMBERNAME}, 
+		#{ORIGIN_ACCOUNT_PASSWORD}, 
+		#{ORIGIN_ACCOUNT_TYPE}, 
+		#{ORIGIN_ACCOUNT_EMPLOYEENUMBER},
+		#{ORIGIN_ACCOUNT_DEPARTMENT},
+		#{ORIGIN_ACCOUNT_TIER},
+		#{ORIGIN_ACCOUNT_RESIDENTNUMBER},
+		#{ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID},
+		#{ORIGIN_ACCOUNT_IMG_DIRECTORY})
+    </insert>
+    
+    <insert id = "RegisterworkerImg">
+        insert into ORIGIN_ACCOUNT(ORIGIN_ACCOUNT_IMG_DIRECTORY)
+    </insert>
+    
+    <insert id = "Registerworkerproperty">
+        insert into WORKER_PROPERTY(
+        	ORIGIN_ACCOUNT_ID,
+        	PROCESS_MAIN_CATEGORY_ID,
+        	ORIGIN_EQUIPMENT_ID,
+        	ORIGIN_ACCOUNT_DIVISION_ID,
+        	ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID)
+        values(
+        	#{ORIGIN_ACCOUNT_ID},
+        	#{PROCESS_MAIN_CATEGORY_ID},
+        	#{ORIGIN_EQUIPMENT_ID},
+        	#{ORIGIN_ACCOUNT_DIVISION_ID},
+        	#{ORIGIN_ACCOUNT_EMPLOYMENT_STATUS_ID})
+    </insert>
+    
+    <update id = "Updateworkerproperty">
+        update WORKER_PROPERTY SET 
+        	PROCESS_MAIN_CATEGORY_ID = #{PROCESS_MAIN_CATEGORY_ID},
+        	ORIGIN_EQUIPMENT_ID = #{ORIGIN_EQUIPMENT_ID}
+        where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </update>
+    
+    <select id = "SelectWorkerProperty" resultType = "com.lsh.testing05.member.vo.MemberVO">
+        select * from WORKER_PROPERTY where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </select>
+    
+    
+    <update id= "WorkerImgDelete">
+        update ORIGIN_ACCOUNT SET ORIGIN_ACCOUNT_IMG_DIRECTORY = null where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </update>
+    
+    <update id = "WorkerImgUpdate">
+        update ORIGIN_ACCOUNT set ORIGIN_ACCOUNT_IMG_DIRECTORY = #{ORIGIN_ACCOUNT_IMG_DIRECTORY} where ORIGIN_ACCOUNT_ID = #{ORIGIN_ACCOUNT_ID}
+    </update>
+</mapper>

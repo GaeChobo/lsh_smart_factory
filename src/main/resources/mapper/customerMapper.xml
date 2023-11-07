@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.customerMapper">
+    <insert id = "RegisterCustomer">
+        insert into CUSTOMER(
+        	CUSTOMER_NAME,
+        	CUSTOMER_NUMBER,
+        	CUSTOMER_INDEXNAME)
+        values(
+        	#{CUSTOMER_NAME},
+        	#{CUSTOMER_NUMBER},
+        	#{CUSTOMER_INDEXNAME})
+    </insert>
+    
+    <select id = "AllSelectCustomer" resultType = "com.lst.testing05.customer.vo.CustomerVO">
+        select * from CUSTOMER
+    </select>
+    
+    <select id = "SearchCustomerAll" resultType = "com.lst.testing05.customer.vo.CustomerVO">
+        select * from CUSTOMER where CUSTOMER_NAME Like '%'+#{CUSTOMER_NAME}+'%' and CUSTOMER_NUMBER Like '%'+#{CUSTOMER_NUMBER}+'%'
+    </select>
+    
+    <select id = "SearchCustomer_1" resultType = "com.lst.testing05.customer.vo.CustomerVO">
+        select * from CUSTOMER where CUSTOMER_NAME Like '%'+#{CUSTOMER_NAME}+'%' and CUSTOMER_NUMBER Like '%'+#{CUSTOMER_NUMBER}+'%' and CUSTOMER_INDEXNAME Like '외주업체'
+    </select>
+    
+    <select id = "SearchCustomer_2" resultType = "com.lst.testing05.customer.vo.CustomerVO">
+        select * from CUSTOMER where CUSTOMER_NAME Like '%'+#{CUSTOMER_NAME}+'%' and CUSTOMER_NUMBER Like '%'+#{CUSTOMER_NUMBER}+'%' and CUSTOMER_INDEXNAME Like '납품처'
+    </select>
+    
+    <select id = "SearchCustomer" resultType = "com.lst.testing05.customer.vo.CustomerVO">
+       select * from CUSTOMER where CUSTOMER_NAME Like '%'+#{CUSTOMER_NAME}+'%' and CUSTOMER_NUMBER Like '%'+#{CUSTOMER_NUMBER}+'%' and CUSTOMER_INDEXNAME Like '%'+#{CUSTOMER_INDEXNAME}+'%'
+    </select>
+    
+    <delete id = "DeleteCustomer">
+        Delete from CUSTOMER where CUSTOMER_ID = #{CUSTOMER_ID}
+    </delete>
+    
+    <update id = "UpdateCustomer">
+        update CUSTOMER set
+        	CUSTOMER_NAME = #{CUSTOMER_NAME},
+        	CUSTOMER_NUMBER = #{CUSTOMER_NUMBER},
+        	CUSTOMER_INDEXNAME = #{CUSTOMER_INDEXNAME}
+        where CUSTOMER_ID = #{CUSTOMER_ID}
+    </update>
+</mapper>

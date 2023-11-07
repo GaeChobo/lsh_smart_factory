@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.uniquessMapper">
+    
+    <select id = "SearchUniquessWord" resultType = "com.lsh.testing05.uniquess.vo.UniquessVO">
+		select * from ORIGIN_UNIQUESS
+		where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID} and
+		ORIGIN_UNIQUESS_CONTEXT Like
+		'%'+#{ORIGIN_UNIQUESS_CONTEXT}+'%'
+    </select>
+    
+    
+    <select id = "UniquessIdChk" resultType = "int">
+        select count(*) from ORIGIN_UNIQUESS WHERE ORIGIN_UNIQUESS_ID = #{ORIGIN_UNIQUESS_ID}
+    </select>
+	<select id = "SearchUniquess" resultType = "com.lsh.testing05.uniquess.vo.UniquessVO">
+	    select * from ORIGIN_UNIQUESS where ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID}
+	</select>
+	
+	<insert id = "RegisterUniquess">
+	    insert into ORIGIN_UNIQUESS(
+	    	ORIGIN_PROCESS_ID,
+	    	ORIGIN_UNIQUESS_CONTEXT)
+	    values(
+	    	#{ORIGIN_PROCESS_ID},
+	    	#{ORIGIN_UNIQUESS_CONTEXT})
+       	<selectKey keyProperty = "ORIGIN_UNIQUESS_ID" resultType = "int">	
+        SELECT @@IDENTITY as ORIGIN_UNIQUESS_ID
+        </selectKey>
+	</insert>
+	
+	<delete id = "DeleteUniquess">
+	    delete from ORIGIN_UNIQUESS where ORIGIN_UNIQUESS_ID = #{ORIGIN_UNIQUESS_ID}
+	</delete>
+	
+	<update id = "UpdateUniquess">
+	    UPDATE ORIGIN_UNIQUESS SET ORIGIN_UNIQUESS_CONTEXT = #{ORIGIN_UNIQUESS_CONTEXT} 
+	    WHERE ORIGIN_PROCESS_ID = #{ORIGIN_PROCESS_ID} and ORIGIN_UNIQUESS_ID = #{ORIGIN_UNIQUESS_ID}
+	</update>
+	
+	
+</mapper>
